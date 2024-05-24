@@ -1,6 +1,7 @@
 import os
 import telebot
 import yfinance as yf
+from youtubesearchpython import VideosSearch
 
 API_KEY = os.getenv('API_KEY')
 bot = telebot.TeleBot(API_KEY)
@@ -19,7 +20,7 @@ def hello(message):
 @bot.message_handler(commands=['stock'])
 def get_stocks(message):
     response = ""
-    stocks = ['ftnt','tsla','nvda']
+    stocks = ['ftnt', 'tsla', 'nvda', '1937.hk']
     stock_data = []
     for stock in stocks:
         data = yf.download(tickers=stock, period='5d', interval='1d')
@@ -64,6 +65,25 @@ def send_price(message):
         bot.send_message(message.chat.id, data['Close'].to_string(header=False))
     else:
         bot.send_message(message.chat.id, "No data!?")
+
+
+def youtube_search(message):
+    prefixKeyWord = message.text.split()[0]
+    query = message.text.split()[1]
+
+    # if prefixKeyWord is youtube
+    if prefixKeyWord.lower() == 'youtube':
+        videosSearch = VideosSearch(query, limit=5)
+    else:
+        return
+    for i in range(5):
+        print(videosSearch.result()['result'][i]['link'])
+        bot.send_message(message.chat.id, videosSearch.result()['result'][i]['link'])
+
+
+@bot.message_handler(func=youtube_search)
+def send_video_links(message):
+    youtube_search(message)
 
 
 bot.polling()
