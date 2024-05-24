@@ -69,11 +69,12 @@ def send_price(message):
 
 def youtube_search(message):
     prefixKeyWord = message.text.split()[0]
-    query = message.text.split()[1]
+    input = message.text.split()
+    query = ' '.join(input[1:])
 
     # if prefixKeyWord is youtube
     if prefixKeyWord.lower() == 'youtube':
-        videosSearch = VideosSearch(query, limit=5)
+        videosSearch = VideosSearch(query, limit=3)
     else:
         return
     for i in range(5):
