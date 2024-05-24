@@ -20,7 +20,7 @@ def hello(message):
 @bot.message_handler(commands=['stock'])
 def get_stocks(message):
     response = ""
-    stocks = ['ftnt', 'tsla', 'nvda', '1937.hk']
+    stocks = ['ftnt', 'tsla', 'nvda']
     stock_data = []
     for stock in stocks:
         data = yf.download(tickers=stock, period='5d', interval='1d')
