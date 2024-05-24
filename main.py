@@ -67,10 +67,19 @@ def send_price(message):
         bot.send_message(message.chat.id, "No data!?")
 
 
+def check_blank(s):
+    if s.isspace() or not s:
+        return True
+    else:
+        return False
+
+
 def youtube_search(message):
     prefixKeyWord = message.text.split()[0]
     input = message.text.split()
     query = ' '.join(input[1:])
+    if check_blank(query):
+        return
 
     # if prefixKeyWord is youtube
     if prefixKeyWord.lower() == 'youtube':
